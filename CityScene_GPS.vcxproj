@@ -29,26 +29,26 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v142</PlatformToolset>
+    <PlatformToolset>v143</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
-    <PlatformToolset>v142</PlatformToolset>
+    <PlatformToolset>v143</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v142</PlatformToolset>
+    <PlatformToolset>v143</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
-    <PlatformToolset>v142</PlatformToolset>
+    <PlatformToolset>v143</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
@@ -146,6 +146,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="src\Application.cpp" />
+    <ClCompile Include="src\BmpLoader.cpp" />
     <ClCompile Include="src\HelperFunctions.cpp" />
     <ClCompile Include="src\Objects.cpp" />
     <ClCompile Include="src\stb_image.cpp" />
@@ -153,11 +154,185 @@
     <ClCompile Include="src\Texture.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\BmpLoader.h" />
     <ClInclude Include="src\HelperFunctions.h" />
     <ClInclude Include="src\Objects.h" />
     <ClInclude Include="src\Texture.h" />
   </ItemGroup>
   <ItemGroup>
+    <Image Include="res\imageReadMe\3d city instruction.PNG" />
+    <Image Include="res\imageReadMe\3d city.PNG" />
+    <Image Include="res\imageReadMe\Screenshot (340).png" />
+    <Image Include="res\imageReadMe\Screenshot (342).png" />
+    <Image Include="res\imageReadMe\Screenshot (343).png" />
+    <Image Include="res\imageReadMe\Screenshot (344).png" />
+    <Image Include="res\imageReadMe\Screenshot (345).png" />
+    <Image Include="res\imageReadMe\Screenshot (346).png" />
+    <Image Include="res\imageReadMe\Screenshot (347).png" />
+    <Image Include="res\imageReadMe\Screenshot (348).png" />
+    <Image Include="res\images\brick1.bmp" />
+    <Image Include="res\images\brick2.bmp" />
+    <Image Include="res\images\brick3.bmp" />
+    <Image Include="res\images\brick4.bmp" />
+    <Image Include="res\images\building1.bmp" />
+    <Image Include="res\images\building10.bmp" />
+    <Image Include="res\images\building2.bmp" />
+    <Image Include="res\images\building3.bmp" />
+    <Image Include="res\images\building4.bmp" />
+    <Image Include="res\images\building5.bmp" />
+    <Image Include="res\images\building6.bmp" />
+    <Image Include="res\images\building7.bmp" />
+    <Image Include="res\images\building8.bmp" />
+    <Image Include="res\images\building9.bmp" />
+    <Image Include="res\images\bulb1.bmp" />
+    <Image Include="res\images\bulb2.bmp" />
+    <Image Include="res\images\bulb3.bmp" />
+    <Image Include="res\images\bulb4.bmp" />
+    <Image Include="res\images\bulb5.bmp" />
+    <Image Include="res\images\bus10.bmp" />
+    <Image Include="res\images\bus2.bmp" />
+    <Image Include="res\images\bus7.bmp" />
+    <Image Include="res\images\car1.bmp" />
+    <Image Include="res\images\car2.bmp" />
+    <Image Include="res\images\car3.bmp" />
+    <Image Include="res\images\chocolate.bmp" />
+    <Image Include="res\images\door1.bmp" />
+    <Image Include="res\images\door2.bmp" />
+    <Image Include="res\images\door3.bmp" />
+    <Image Include="res\images\door4.bmp" />
+    <Image Include="res\images\floor1.bmp" />
+    <Image Include="res\images\floor2.bmp" />
+    <Image Include="res\images\floor3.bmp" />
+    <Image Include="res\images\football1.bmp" />
+    <Image Include="res\images\football2.bmp" />
+    <Image Include="res\images\football3.bmp" />
+    <Image Include="res\images\grass.bmp" />
+    <Image Include="res\images\grass2.bmp" />
+    <Image Include="res\images\grass3.bmp" />
+    <Image Include="res\images\grass4.bmp" />
+    <Image Include="res\images\kuet1.bmp" />
+    <Image Include="res\images\kuet2.bmp" />
+    <Image Include="res\images\kuet3.bmp" />
+    <Image Include="res\images\leaf1.bmp" />
+    <Image Include="res\images\leaf2.bmp" />
+    <Image Include="res\images\leaf3.bmp" />
+    <Image Include="res\images\leaf4.bmp" />
+    <Image Include="res\images\leaf5.bmp" />
+    <Image Include="res\images\leaf6.bmp" />
+    <Image Include="res\images\leaf7.bmp" />
+    <Image Include="res\images\moon1.bmp" />
+    <Image Include="res\images\moon2.bmp" />
+    <Image Include="res\images\moon3.bmp" />
+    <Image Include="res\images\road.bmp" />
+    <Image Include="res\images\road2.bmp" />
+    <Image Include="res\images\road3.bmp" />
+    <Image Include="res\images\shop1.bmp" />
+    <Image Include="res\images\shop2.bmp" />
+    <Image Include="res\images\shop3.bmp" />
+    <Image Include="res\images\shop4.bmp" />
+    <Image Include="res\images\shop5.bmp" />
+    <Image Include="res\images\shop6.bmp" />
+    <Image Include="res\images\shop7.bmp" />
+    <Image Include="res\images\signboard1.bmp" />
+    <Image Include="res\images\signboard2.bmp" />
+    <Image Include="res\images\signboard3.bmp" />
+    <Image Include="res\images\signboard4.bmp" />
+    <Image Include="res\images\signboard5.bmp" />
+    <Image Include="res\images\signboard6.bmp" />
+    <Image Include="res\images\signboard7.bmp" />
+    <Image Include="res\images\signboard8.bmp" />
+    <Image Include="res\images\soil1.bmp" />
+    <Image Include="res\images\stone1.bmp" />
+    <Image Include="res\images\sun1.bmp" />
+    <Image Include="res\images\sun2.bmp" />
+    <Image Include="res\images\sun3.bmp" />
+    <Image Include="res\images\traffic1.bmp" />
+    <Image Include="res\images\traffic2.bmp" />
+    <Image Include="res\images\tree1.bmp" />
+    <Image Include="res\images\tree2.bmp" />
+    <Image Include="res\images\watch1.bmp" />
+    <Image Include="res\images\watch2.bmp" />
+    <Image Include="res\images\water1.bmp" />
+    <Image Include="res\images\water2.bmp" />
+    <Image Include="res\images\water3.bmp" />
+    <Image Include="res\images\water4.bmp" />
+    <Image Include="res\images\water5.bmp" />
+    <Image Include="res\images\window1.bmp" />
+    <Image Include="res\images\window2.bmp" />
+    <Image Include="res\images\window3.bmp" />
+    <Image Include="res\images\window4.bmp" />
+    <Image Include="res\images\wood1.bmp" />
+    <Image Include="res\images\wood2.bmp" />
+    <Image Include="res\images\wood3.bmp" />
+    <Image Include="res\images\wood4.bmp" />
+    <Image Include="res\Normal Images\b10.jpg" />
+    <Image Include="res\Normal Images\b5.jpg" />
+    <Image Include="res\Normal Images\b6.jpg" />
+    <Image Include="res\Normal Images\b7.jpg" />
+    <Image Include="res\Normal Images\b8.jpg" />
+    <Image Include="res\Normal Images\b9.jpg" />
+    <Image Include="res\Normal Images\bulb1.jpg" />
+    <Image Include="res\Normal Images\bulb2.jpg" />
+    <Image Include="res\Normal Images\bulb3.jpg" />
+    <Image Include="res\Normal Images\bulb4.jpg" />
+    <Image Include="res\Normal Images\car1.jpg" />
+    <Image Include="res\Normal Images\car2.jpg" />
+    <Image Include="res\Normal Images\car3.jpg" />
+    <Image Include="res\Normal Images\chocolate.png" />
+    <Image Include="res\Normal Images\floor1.jpg" />
+    <Image Include="res\Normal Images\floor2.jpg" />
+    <Image Include="res\Normal Images\floor3.jpg" />
+    <Image Include="res\Normal Images\grass.jpg" />
+    <Image Include="res\Normal Images\grass2.jpg" />
+    <Image Include="res\Normal Images\grass3.jpg" />
+    <Image Include="res\Normal Images\grass4.jpg" />
+    <Image Include="res\Normal Images\images (3).jpg" />
+    <Image Include="res\Normal Images\jordan-holbrook-rox.jpg" />
+    <Image Include="res\Normal Images\leaf1.jpg" />
+    <Image Include="res\Normal Images\leaf2.jpg" />
+    <Image Include="res\Normal Images\leaf3.jpg" />
+    <Image Include="res\Normal Images\leaf4.jpg" />
+    <Image Include="res\Normal Images\leaf5.jpg" />
+    <Image Include="res\Normal Images\leaf6.jpg" />
+    <Image Include="res\Normal Images\leaf7.jpg" />
+    <Image Include="res\Normal Images\moon1.jpg" />
+    <Image Include="res\Normal Images\moon2.jpg" />
+    <Image Include="res\Normal Images\moon3.jpg" />
+    <Image Include="res\Normal Images\shop1.jpg" />
+    <Image Include="res\Normal Images\shop2.jpg" />
+    <Image Include="res\Normal Images\shop3.jpg" />
+    <Image Include="res\Normal Images\shop4.jpg" />
+    <Image Include="res\Normal Images\shop5.jpg" />
+    <Image Include="res\Normal Images\shop6.jpg" />
+    <Image Include="res\Normal Images\shop7.jpg" />
+    <Image Include="res\Normal Images\signboard1.jpg" />
+    <Image Include="res\Normal Images\signboard2.jpg" />
+    <Image Include="res\Normal Images\signboard3.png" />
+    <Image Include="res\Normal Images\signboard4.jpg" />
+    <Image Include="res\Normal Images\signboard5.jpg" />
+    <Image Include="res\Normal Images\signboard6.jpg" />
+    <Image Include="res\Normal Images\signboard7.jpeg" />
+    <Image Include="res\Normal Images\signboard8.jpg" />
+    <Image Include="res\Normal Images\soil1.jpg" />
+    <Image Include="res\Normal Images\stone1.jpg" />
+    <Image Include="res\Normal Images\stone2.jpg" />
+    <Image Include="res\Normal Images\sun1.jpg" />
+    <Image Include="res\Normal Images\sun2.png" />
+    <Image Include="res\Normal Images\sun3.jpg" />
+    <Image Include="res\Normal Images\the-best-time-to-plant-a-tree-1024x682.jpeg" />
+    <Image Include="res\Normal Images\traffic1.png" />
+    <Image Include="res\Normal Images\traffic2.png" />
+    <Image Include="res\Normal Images\tree1.jpg" />
+    <Image Include="res\Normal Images\tree2.png" />
+    <Image Include="res\Normal Images\water1.jpg" />
+    <Image Include="res\Normal Images\water2.jpg" />
+    <Image Include="res\Normal Images\water3.jpg" />
+    <Image Include="res\Normal Images\water4.jpg" />
+    <Image Include="res\Normal Images\water5.jpg" />
+    <Image Include="res\Normal Images\wood1.jpg" />
+    <Image Include="res\Normal Images\wood2.jpg" />
+    <Image Include="res\Normal Images\wood3.jpg" />
+    <Image Include="res\Normal Images\wood4.jpg" />
     <Image Include="res\textures\bg_lat1.png" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

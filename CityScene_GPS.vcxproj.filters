@@ -33,6 +33,9 @@
     <ClCompile Include="src\Objects.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\BmpLoader.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Texture.h">
@@ -44,9 +47,531 @@
     <ClInclude Include="src\Objects.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="src\BmpLoader.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Image Include="res\textures\bg_lat1.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\imageReadMe\3d city instruction.PNG">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\imageReadMe\3d city.PNG">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\imageReadMe\Screenshot (340).png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\imageReadMe\Screenshot (342).png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\imageReadMe\Screenshot (343).png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\imageReadMe\Screenshot (344).png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\imageReadMe\Screenshot (345).png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\imageReadMe\Screenshot (346).png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\imageReadMe\Screenshot (347).png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\imageReadMe\Screenshot (348).png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\images\brick1.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\images\brick2.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\images\brick3.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\images\brick4.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\images\building1.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\images\building2.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\images\building3.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\images\building4.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\images\building5.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\images\building6.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\images\building7.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\images\building8.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\images\building9.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\images\building10.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\images\bulb1.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\images\bulb2.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\images\bulb3.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\images\bulb4.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\images\bulb5.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\images\bus2.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\images\bus7.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\images\bus10.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\images\car1.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\images\car2.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\images\car3.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\images\chocolate.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\images\door1.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\images\door2.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\images\door3.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\images\door4.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\images\floor1.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\images\floor2.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\images\floor3.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\images\football1.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\images\football2.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\images\football3.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\images\grass.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\images\grass2.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\images\grass3.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\images\grass4.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\images\kuet1.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\images\kuet2.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\images\kuet3.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\images\leaf1.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\images\leaf2.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\images\leaf3.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\images\leaf4.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\images\leaf5.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\images\leaf6.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\images\leaf7.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\images\moon1.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\images\moon2.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\images\moon3.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\images\road.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\images\road2.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\images\road3.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\images\shop1.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\images\shop2.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\images\shop3.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\images\shop4.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\images\shop5.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\images\shop6.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\images\shop7.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\images\signboard1.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\images\signboard2.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\images\signboard3.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\images\signboard4.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\images\signboard5.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\images\signboard6.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\images\signboard7.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\images\signboard8.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\images\soil1.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\images\stone1.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\images\sun1.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\images\sun2.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\images\sun3.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\images\traffic1.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\images\traffic2.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\images\tree1.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\images\tree2.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\images\watch1.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\images\watch2.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\images\water1.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\images\water2.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\images\water3.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\images\water4.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\images\water5.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\images\window1.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\images\window2.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\images\window3.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\images\window4.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\images\wood1.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\images\wood2.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\images\wood3.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\images\wood4.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\Normal Images\b5.jpg">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\Normal Images\b6.jpg">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\Normal Images\b7.jpg">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\Normal Images\b8.jpg">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\Normal Images\b9.jpg">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\Normal Images\b10.jpg">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\Normal Images\bulb1.jpg">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\Normal Images\bulb2.jpg">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\Normal Images\bulb3.jpg">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\Normal Images\bulb4.jpg">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\Normal Images\car1.jpg">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\Normal Images\car2.jpg">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\Normal Images\car3.jpg">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\Normal Images\chocolate.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\Normal Images\floor1.jpg">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\Normal Images\floor2.jpg">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\Normal Images\floor3.jpg">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\Normal Images\grass.jpg">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\Normal Images\grass2.jpg">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\Normal Images\grass3.jpg">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\Normal Images\grass4.jpg">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\Normal Images\images (3).jpg">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\Normal Images\jordan-holbrook-rox.jpg">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\Normal Images\leaf1.jpg">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\Normal Images\leaf2.jpg">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\Normal Images\leaf3.jpg">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\Normal Images\leaf4.jpg">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\Normal Images\leaf5.jpg">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\Normal Images\leaf6.jpg">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\Normal Images\leaf7.jpg">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\Normal Images\moon1.jpg">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\Normal Images\moon2.jpg">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\Normal Images\moon3.jpg">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\Normal Images\shop1.jpg">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\Normal Images\shop2.jpg">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\Normal Images\shop3.jpg">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\Normal Images\shop4.jpg">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\Normal Images\shop5.jpg">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\Normal Images\shop6.jpg">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\Normal Images\shop7.jpg">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\Normal Images\signboard1.jpg">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\Normal Images\signboard2.jpg">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\Normal Images\signboard3.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\Normal Images\signboard4.jpg">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\Normal Images\signboard5.jpg">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\Normal Images\signboard6.jpg">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\Normal Images\signboard7.jpeg">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\Normal Images\signboard8.jpg">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\Normal Images\soil1.jpg">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\Normal Images\stone1.jpg">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\Normal Images\stone2.jpg">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\Normal Images\sun1.jpg">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\Normal Images\sun2.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\Normal Images\sun3.jpg">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\Normal Images\the-best-time-to-plant-a-tree-1024x682.jpeg">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\Normal Images\traffic1.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\Normal Images\traffic2.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\Normal Images\tree1.jpg">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\Normal Images\tree2.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\Normal Images\water1.jpg">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\Normal Images\water2.jpg">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\Normal Images\water3.jpg">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\Normal Images\water4.jpg">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\Normal Images\water5.jpg">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\Normal Images\wood1.jpg">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\Normal Images\wood2.jpg">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\Normal Images\wood3.jpg">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\Normal Images\wood4.jpg">
       <Filter>Resource Files</Filter>
     </Image>
   </ItemGroup>

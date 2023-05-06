@@ -52,6 +52,10 @@ float rot = 0;
 
 unsigned int ID;
 
+unsigned int skyID;
+unsigned int horizontID;
+
+
 const double PI = 3.14159265389;
 
 
@@ -145,11 +149,11 @@ void cube(float R = 0.5, float G = 0.5, float B = 0.5)
 
 
 
-void LoadTexture(const char* filename, int rep = 1)
+void LoadTexture(const char* filename, int rep = 1, unsigned int *id = &ID)
 {
-	glGenTextures(1, &ID);
-	glBindTexture(GL_TEXTURE_2D, ID);
-	glPixelStorei(GL_UNPACK_ALIGNMENT, ID);
+	glGenTextures(1, id);
+	glBindTexture(GL_TEXTURE_2D, *id);
+	glPixelStorei(GL_UNPACK_ALIGNMENT, *id);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 
@@ -600,7 +604,7 @@ void sun_moon()
 	glBindTexture(GL_TEXTURE_2D, 21);
 
 	glPushMatrix();
-	glTranslatef(0, 150, 0);
+	glTranslatef(0, 250, 0);
 	glScalef(3, 3, 3);
 	glutSolidSphere(2, 16, 16);
 	glPopMatrix();
@@ -891,17 +895,100 @@ void bus_control()
 
 void base_floor()
 {
+
+	float length = 500;
+	float height = 300;
+	float thick = 1;
+
+	// wall floor
 	glEnable(GL_TEXTURE_2D);
 	glBindTexture(GL_TEXTURE_2D, 20);
-
 	glPushMatrix();
-	glTranslatef(0, 0, 0);
-	glScalef(600, 1, 500);
-	glTranslatef(-0.5, -0.5, -0.5);
+	glScalef(length, thick, length); // seteaza dimensiunile    latime /inaltime/ lungime    x/y/z
+	glTranslatef(-0.5, -0.5, -0.5); // Seteaza coordonatele
 	cube(0.2, 0.2, 0.2);
 	glPopMatrix();
-
 	glDisable(GL_TEXTURE_2D);
+
+
+	//// wall floor
+	//glEnable(GL_TEXTURE_2D);
+	//glBindTexture(GL_TEXTURE_2D, 20);
+	//glPushMatrix();
+	//glScalef(length, height, length); // seteaza dimensiunile    latime /inaltime/ lungime    x/y/z
+	//glTranslatef(-0.5, -0.5, -0.5); // Seteaza coordonatele
+	//cube(0.2, 0.2, 0.2);
+	//glPopMatrix();
+	//glDisable(GL_TEXTURE_2D);
+
+	//cube2(length, height, length);
+
+	// wall Up
+	glEnable(GL_TEXTURE_2D);
+	glBindTexture(GL_TEXTURE_2D, skyID);
+
+	// Set the texture wrapping mode to repeat in both directions
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+
+	glPushMatrix();
+	glTranslatef(0, 300, 0);
+	glScalef(length, thick, length);
+	glTranslatef(-0.5, 1, -0.5);
+	cube(1.0, 1.0, 1.0);
+	glPopMatrix();
+	glDisable(GL_TEXTURE_2D);
+
+
+	//wall left
+	glEnable(GL_TEXTURE_2D);
+	glBindTexture(GL_TEXTURE_2D, horizontID);
+	glPushMatrix();
+	glTranslatef(length / 2 +200, 0, 0);
+	glScalef(thick, length, length);
+	glTranslatef(0, 0, -0.5);
+	cube(0.5, 0.5, 0.5);
+	glPopMatrix();
+	glDisable(GL_TEXTURE_2D);
+
+	//wall right
+	glEnable(GL_TEXTURE_2D);
+	glBindTexture(GL_TEXTURE_2D, horizontID);
+	glPushMatrix();
+	glTranslatef(-length / 2 -200, 0, 0);
+	glScalef(thick, length, length);
+	glTranslatef(0, 0, -0.5);
+	cube(0.5, 0.5, 0.5);
+	glPopMatrix();
+	glDisable(GL_TEXTURE_2D);
+
+
+	// back side
+	glEnable(GL_TEXTURE_2D);
+	glBindTexture(GL_TEXTURE_2D, horizontID);
+	glPushMatrix();
+	glTranslatef(0, 0, -length / 2);
+	glScalef(length, 300, thick);
+	glTranslatef(-0.5, 0, 0);
+	cube(1.0, 1.0, 1.0);
+	glPopMatrix();
+	glDisable(GL_TEXTURE_2D);
+
+
+	// front side wall
+	glEnable(GL_TEXTURE_2D);
+	glBindTexture(GL_TEXTURE_2D, horizontID);
+
+	glPushMatrix();
+	glTranslatef(9, 0, length / 2);
+	glScalef(length, 300, thick);
+	glTranslatef(-0.5, 0, 0);
+	cube(1.0, 1.0, 1.0);
+	glPopMatrix();
+	glDisable(GL_TEXTURE_2D);
+
 
 }
 
@@ -1154,8 +1241,8 @@ void display_settings()
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
-	int frustum_window = 10;
-	glFrustum(-frustum_window, frustum_window, -frustum_window, frustum_window, 4, 300);
+	int frustum_window = 8;
+	glFrustum(-frustum_window, frustum_window, -frustum_window, frustum_window, 4, 700);
 
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
@@ -1167,6 +1254,7 @@ void display_settings()
 
 	glRotatef(rot, 0, 1, 0);
 }
+
 
 static void display(void)
 {
@@ -1377,6 +1465,12 @@ void texture_function()
 
 	// hotel Door
 	LoadTexture("res\\images\\door3.bmp", 30);
+
+	LoadTexture("res\\images\\sky.bmp",31, &skyID);
+
+	LoadTexture("res\\images\\horizont.bmp", 32, &horizontID);
+
+
 }
 
 void SpecialInput(int key, int x, int y)
@@ -1408,7 +1502,7 @@ int main(int argc, char* argv[])
 	glutInitWindowSize(window_width, window_height);
 	glutInitWindowPosition(300, 10);
 	glutInitDisplayMode(GLUT_SINGLE | GLUT_RGB | GLUT_DEPTH);
-	glutCreateWindow("3D City Architecture Design: 1607048");
+	glutCreateWindow("3D City");
 
 	texture_function();
 

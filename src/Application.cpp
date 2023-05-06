@@ -1,9 +1,7 @@
 /*
 --------------------------
 3D City Architecture Design
-Faisal Ahmed
-Roll: 1607048
-Department of CSE, KUET
+Lazarenco Anax
 ----------------------------------
 ----------------------------------
 Components of 3D City Architecture
@@ -16,25 +14,21 @@ Components of 3D City Architecture
 7. Cars
 8. Tress
 9. Parks
-10. Signboard
-11. Sun/Moon
-12. Swimming Pool
+10. Sun
 ----------------------------------
 ----------------------------------
 */
 #include <windows.h>
-#include<GL/gl.h>
+#include <GL/gl.h>
 #include <GL/glu.h>
 #include <glut.h>
-#include <windows.h>
-#include<math.h>
-#include<iostream>
+#include <math.h>
+#include <iostream>
 #include "BmpLoader.h"
 #include <fstream>
 #include <iostream>
 #define GL_CLAMP_TO_EDGE 0x812F
 using namespace std;
-
 
 const int window_width = 1200;
 const int window_height = 700;
@@ -51,10 +45,8 @@ bool light_switch_1 = true;
 bool spot_light_switch = true;
 bool main_light_switch = true;
 
-float carx = -300, carz = 0;
-float busx = 0, busz = -300;
+float busz = -300;
 bool bus_switch = true;
-bool car_switch = true;
 
 float rot = 0;
 
@@ -65,164 +57,11 @@ const double PI = 3.14159265389;
 
 /* GLUT callback Handlers */
 
-
-int anglex = 0, angley = 0, anglez = 0;          //rotation angles
-int window;
 int wired = 0;
-int shcpt = 1;
-int animat = 0;
-const int L = 20;
-const int dgre = 3;
-int ncpt = L + 1;
-int clikd = 0;
-const int nt = 40;				//number of slices along x-direction
-const int ntheta = 20;
 
-
-GLfloat ctrlpoints[L + 1][3] =
-{
-{7.625,5.4,0},
-{7.325,4.775,0},
-{7.225,4.05,0},
-{6.975,3.4,0},
-{6.675,2.85,0},
-{6.275,2.15,0},
-{5.85,1.725,0},
-{4.85,1.15,0},
-{3.975,0.9,0},
-{3.325,0.85,0},
-{2.9,0.375,0},
-{2.775,-0.175,0},
-{2.725,-0.7,0},
-{3.225,-0.925,0},
-{3.875,-0.9,0},
-{5.175,-1.375,0},
-{5.825,-1.975,0},
-{6.5,-2.725,0},
-{6.925,-3.925,0},
-{7.325,-5.05,0},
-{7.6,0.175,0},
-};
-
-
-
-
-float wcsClkDn[3], wcsClkUp[3];
-///////////////////////////////
-class point1
-{
-public:
-	point1()
-	{
-		x = 0;
-		y = 0;
-	}
-	int x;
-	int y;
-} clkpt[2];
-int curve_flag = 0;
 GLint viewport[4]; //var to hold the viewport info
 GLdouble modelview[16]; //var to hold the modelview info
 GLdouble projection[16]; //var to hold the projection matrix info
-
-//////////////////////////
-void scsToWcs(float sx, float sy, float wcsv[3]);
-void processMouse(int button, int state, int x, int y);
-void matColor(float kdr, float kdg, float kdb, float shiny, int frnt_Back = 0, float ambFactor = 1.0, float specFactor = 1.0);
-///////////////////////////
-
-void scsToWcs(float sx, float sy, float wcsv[3])
-{
-
-	GLfloat winX, winY, winZ; //variables to hold screen x,y,z coordinates
-	GLdouble worldX, worldY, worldZ; //variables to hold world x,y,z coordinates
-
-	//glGetDoublev( GL_MODELVIEW_MATRIX, modelview ); //get the modelview info
-	glGetDoublev(GL_PROJECTION_MATRIX, projection); //get the projection matrix info
-	glGetIntegerv(GL_VIEWPORT, viewport); //get the viewport info
-
-	winX = sx;
-	winY = (float)viewport[3] - (float)sy;
-	winZ = 0;
-
-	//get the world coordinates from the screen coordinates
-	gluUnProject(winX, winY, winZ, modelview, projection, viewport, &worldX, &worldY, &worldZ);
-	wcsv[0] = worldX;
-	wcsv[1] = worldY;
-	wcsv[2] = worldZ;
-
-
-}
-void processMouse(int button, int state, int x, int y)
-{
-	if (button == GLUT_LEFT_BUTTON && state == GLUT_DOWN)
-	{
-		if (curve_flag != 1)
-		{
-			curve_flag = 1;
-			clkpt[0].x = x;
-			clkpt[0].y = y;
-		}
-
-
-		scsToWcs(clkpt[0].x, clkpt[0].y, wcsClkDn);
-		//cout<<"\nD: "<<x<<" "<<y<<" wcs: "<<wcsClkDn[0]<<" "<<wcsClkDn[1];
-		cout << "{" << wcsClkDn[0] << "," << wcsClkDn[1] << ",0}," << endl;
-	}
-	else if (button == GLUT_LEFT_BUTTON && state == GLUT_UP)
-	{
-		if (curve_flag == 1)
-		{
-			clkpt[1].x = x;
-			clkpt[1].y = y;
-			curve_flag = 0;
-		}
-		float wcs[3];
-		scsToWcs(clkpt[1].x, clkpt[1].y, wcsClkUp);
-		//cout<<"\nU: "<<x<<" "<<y<<" wcs: "<<wcsClkUp[0]<<" "<<wcsClkUp[1];
-
-		clikd = !clikd;
-	}
-}
-
-//control points
-long long nCr(int n, int r)
-{
-	if (r > n / 2) r = n - r; // because C(n, r) == C(n, n - r)
-	long long ans = 1;
-	int i;
-
-	for (i = 1; i <= r; i++)
-	{
-		ans *= n - r + i;
-		ans /= i;
-	}
-
-	return ans;
-}
-
-//polynomial interpretation for N points
-void BezierCurve(double t, float xy[2])
-{
-	double y = 0;
-	double x = 0;
-	t = t > 1.0 ? 1.0 : t;
-	for (int i = 0; i <= L; i++)
-	{
-		int ncr = nCr(L, i);
-		double oneMinusTpow = pow(1 - t, double(L - i));
-		double tPow = pow(t, double(i));
-		double coef = oneMinusTpow * tPow * ncr;
-		x += coef * ctrlpoints[i][0];
-		y += coef * ctrlpoints[i][1];
-
-	}
-	xy[0] = float(x);
-	xy[1] = float(y);
-
-	//return y;
-}
-
 
 static GLfloat v_cube[8][3] =
 {
@@ -239,16 +78,12 @@ static GLfloat v_cube[8][3] =
 
 static GLubyte c_ind[6][4] =
 {
-
-
 	{3,1,5,7},
 	{2,0,1,3},
 	{7,5,4,6},
 	{2,3,7,6},
 	{1,0,5,4},
 	{6,4,0,2},
-
-
 };
 static void getNormal3p(GLfloat x1, GLfloat y1, GLfloat z1, GLfloat x2, GLfloat y2, GLfloat z2, GLfloat x3, GLfloat y3, GLfloat z3)
 {
@@ -281,11 +116,7 @@ void material_property(float R, float G, float B)
 	glMaterialfv(GL_FRONT, GL_DIFFUSE, mat_diffuse);
 	glMaterialfv(GL_FRONT, GL_SPECULAR, mat_specular);
 	glMaterialfv(GL_FRONT, GL_SHININESS, mat_shininess);
-
 }
-
-
-
 
 void cube(float R = 0.5, float G = 0.5, float B = 0.5)
 {
@@ -321,16 +152,9 @@ void LoadTexture(const char* filename, int rep = 1)
 	glPixelStorei(GL_UNPACK_ALIGNMENT, ID);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-	if (rep)
-	{
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-	}
-	else
-	{
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
-	}
+
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
 
 	BmpLoader bl(filename);
 	gluBuild2DMipmaps(GL_TEXTURE_2D, GL_RGB, bl.iWidth, bl.iHeight, GL_RGB, GL_UNSIGNED_BYTE, bl.textureData);
@@ -341,7 +165,6 @@ void displayBuilding(int x_translate, int z_translate, int texture)
 	// building 
 	glEnable(GL_TEXTURE_2D);
 	glBindTexture(GL_TEXTURE_2D, texture);
-
 	glPushMatrix();
 	glTranslatef(x_translate, 30, z_translate);
 	glScalef(20, 60, 20);
@@ -350,7 +173,6 @@ void displayBuilding(int x_translate, int z_translate, int texture)
 	glPopMatrix();
 
 	glDisable(GL_TEXTURE_2D);
-
 
 	//roof
 	glPushMatrix();
@@ -465,9 +287,6 @@ void hotel_walls()
 }
 void hotel()
 {
-
-
-
 	// hotel  walls
 	hotel_walls();
 
@@ -671,14 +490,12 @@ void displayShop(int x_translate, int z_translate, int texture)
 	// shop 
 	glEnable(GL_TEXTURE_2D);
 	glBindTexture(GL_TEXTURE_2D, texture);
-
 	glPushMatrix();
 	glTranslatef(x_translate, 20, z_translate);
 	glScalef(20, 30, 20);
 	glTranslatef(-0.5, -0.5, -0.5);
 	cube();
 	glPopMatrix();
-
 	glDisable(GL_TEXTURE_2D);
 
 	//roof
@@ -918,178 +735,6 @@ void spot_light_function(float x, float y, float z)
 	glLightf(GL_LIGHT2, GL_SPOT_CUTOFF, cut_off);
 
 }
-void axes()
-{
-	float length = 10;
-	float width = 0.3;
-
-	// X-axis
-	glPushMatrix();
-	glTranslatef(length / 2, 0, 0);
-	glScalef(length, width, width);
-	glTranslatef(-0.5, -0.5, -0.5);
-	cube(1, 0, 0);
-	glPopMatrix();
-
-	// Y-axis
-	glPushMatrix();
-	glTranslatef(0, length / 2, 0);
-	glScalef(width, length, width);
-	glTranslatef(-0.5, -0.5, -0.5);
-	cube(0, 1, 0);
-	glPopMatrix();
-
-	// Z-axis
-	glPushMatrix();
-	glTranslatef(0, 0, length / 2);
-	glScalef(width, width, length);
-	glTranslatef(-0.5, -0.5, -0.5);
-	cube(0, 0, 1);
-	glPopMatrix();
-}
-
-
-void car_wheels()
-{
-	// wheel 1
-	glPushMatrix();
-	glTranslatef(-5, 5, 18);
-	glutSolidTorus(1, 2, 16, 16);
-	glPopMatrix();
-
-	// wheel 2
-	glPushMatrix();
-	glTranslatef(5, 5, 18);
-	glutSolidTorus(1, 2, 16, 16);
-	//glutSolidSphere(2,16,16);
-	glPopMatrix();
-
-	// wheel 3
-	glPushMatrix();
-	glTranslatef(5, 5, 22);
-	glutSolidTorus(1, 2, 16, 16);
-	//glutSolidSphere(2,16,16);
-	glPopMatrix();
-
-	// wheel 4
-	glPushMatrix();
-	glTranslatef(-5, 5, 22);
-	glutSolidTorus(1, 2, 16, 16);
-	//glutSolidSphere(2,10,10);
-	glPopMatrix();
-}
-void cars()
-{
-
-	//base
-	//glEnable(GL_TEXTURE_2D);
-	//glBindTexture(GL_TEXTURE_2D,16);
-
-	glPushMatrix();
-	glTranslatef(0, 15, 20);
-	glScalef(20, 15, 5);
-	glTranslatef(-0.5, -0.5, -0.5);
-	cube(1.0, 1.0, 0.0);
-	glPopMatrix();
-	//glDisable(GL_TEXTURE_2D);
-
-	// Car front view
-	glEnable(GL_TEXTURE_2D);
-	glBindTexture(GL_TEXTURE_2D, 29);
-	glPushMatrix();
-	glTranslatef(10, 15, 20);
-	glScalef(1, 15, 6);
-	glTranslatef(-0.5, -0.5, -0.5);
-	cube(0.5, 0.5, 0.0);
-	glPopMatrix();
-	glDisable(GL_TEXTURE_2D);
-
-	// Front Lights 1
-	material_property(0.5, 0.5, 0.5);
-	glPushMatrix();
-	glTranslatef(11, 12, 22);
-	glTranslatef(-0.5, -0.5, -0.5);
-	glRotatef(90, 0, 1, 0);
-	glutSolidTorus(0.2, .5, 16, 16);
-	glPopMatrix();
-
-	// Front Lights 2
-	material_property(0.5, 0.5, 0.5);
-	glPushMatrix();
-	glTranslatef(11, 12, 18);
-	glTranslatef(-0.5, -0.5, -0.5);
-	glRotatef(90, 0, 1, 0);
-	glutSolidTorus(0.2, .5, 16, 16);
-	glPopMatrix();
-
-
-	// upper base car
-	glPushMatrix();
-	glTranslatef(0, 23, 20);
-	glScalef(20, 1, 8);
-	glTranslatef(-0.5, -0.5, -0.5);
-	cube(1.0, 1.0, 0.0);
-	glPopMatrix();
-
-
-	// Left side car
-	glEnable(GL_TEXTURE_2D);
-	glBindTexture(GL_TEXTURE_2D, 26);
-	glPushMatrix();
-	glTranslatef(0, 15, 23);
-	glScalef(20, 15, 0.2);
-	glTranslatef(-0.5, -0.5, -0.5);
-	cube(1.0, 1.0, 1.0);
-	glPopMatrix();
-	glDisable(GL_TEXTURE_2D);
-
-	// right side car
-	glEnable(GL_TEXTURE_2D);
-	glBindTexture(GL_TEXTURE_2D, 26);
-	glPushMatrix();
-	glTranslatef(0, 15, 17);
-	glScalef(20, 15, 0.2);
-	glTranslatef(-0.5, -0.5, -0.5);
-	cube(1.0, 1.0, 1.0);
-	glPopMatrix();
-	glDisable(GL_TEXTURE_2D);
-
-	car_wheels();
-
-
-
-}
-void car_animation()
-{
-	if (carx <= 300)
-	{
-
-		carx += 0.05;
-	}
-	if (carx >= 300)
-	{
-		carx = -300;
-
-	}
-
-	glutPostRedisplay();
-
-}
-void car_move()
-{
-	for (int i = 1; i <= 100; i += 30)
-	{
-		glPushMatrix();
-		glTranslatef(carx + i, 0, 0);
-		cars();
-		if (car_switch) {
-
-			car_animation();
-		}
-		glPopMatrix();
-	}
-
-}
 
 void bus_front()
 {
@@ -1156,41 +801,25 @@ void bus_back_side()
 	glPopMatrix();
 
 }
+
+void bus_wheel(int x_translate, int z_translate)
+{
+	glPushMatrix();
+	glTranslatef(x_translate, 5, z_translate);
+	glRotatef(90, 0, 1, 0);
+	glutSolidTorus(2, 4, 16, 16);
+	glPopMatrix();
+}
+
 void bus_wheels()
 {
-
-
-	// wheel 1
-	glPushMatrix();
-	glTranslatef(2, 5, -10);
-	glRotatef(90, 0, 1, 0);
-	glutSolidTorus(2, 4, 16, 16);
-	glPopMatrix();
-
-	// wheel 2
-	glPushMatrix();
-	glTranslatef(20, 5, -10);
-	glRotatef(90, 0, 1, 0);
-	glutSolidTorus(2, 4, 16, 16);
-	glPopMatrix();
-
-	// wheel 3
-	glPushMatrix();
-	glTranslatef(2, 5, -35);
-	glRotatef(90, 0, 1, 0);
-	glutSolidTorus(2, 4, 16, 16);
-	glPopMatrix();
-
-	// wheel 4
-	glPushMatrix();
-	glTranslatef(20, 5, -35);
-	glRotatef(90, 0, 1, 0);
-	glutSolidTorus(2, 4, 16, 16);
-	glPopMatrix();
-
-
+	bus_wheel(2, -10);
+	bus_wheel(20, -10);
+	bus_wheel(2, -35);
+	bus_wheel(20, -35);
 
 }
+
 void bus()
 {
 	glPushMatrix();
@@ -1205,49 +834,31 @@ void bus()
 	glDisable(GL_TEXTURE_2D);
 
 	//FRONT
-
-
 	bus_front();
 
-
-
 	// Bus left side
-
 	bus_left_side();
 
-
 	// Bus right side
-
 	bus_right_side();
 
-
 	// bus back side
-
 	bus_back_side();
 
-
 	// bus wheels
-
 	bus_wheels();
 
-
 	glPopMatrix();
-
-
-
-
 }
 void bus_animation()
 {
 	if (busz <= 300)
 	{
-
 		busz += 0.08;
 	}
 	if (busz >= 300)
 	{
 		busz = -300;
-
 	}
 
 	glutPostRedisplay();
@@ -1255,45 +866,27 @@ void bus_animation()
 }
 void bus_move()
 {
-	for (int i = 1; i <= 150; i += 70)
+	for (int i = 1; i <= 150; i += 50)
 	{
 		glPushMatrix();
-		glTranslatef(0, 0, busz + i);
+		glTranslatef(0, 0, busz + 1);
 		bus();
 		if (bus_switch)
 		{
-
 			bus_animation();
 		}
 
 		glPopMatrix();
 	}
-
-
 }
 
 void bus_control()
 {
-
-
-	//bus_move();
 	glPushMatrix();
 	glTranslatef(-55, 0, 0);
 	glScalef(0.5, 0.5, 0.5);
 	bus_move();
 	glPopMatrix();
-
-
-
-}
-void car_control()
-{
-
-	glPushMatrix();
-	car_move();
-	glPopMatrix();
-
-
 }
 
 void base_floor()
@@ -1434,9 +1027,6 @@ void wall_watch()
 	glTranslatef(-0.5, -0.5, -0.5);
 	cube(1, 1, 0);
 	glPopMatrix();
-
-
-
 }
 void park_with_tree()
 {
@@ -1479,18 +1069,6 @@ static void idle(void)
 }
 
 
-void showControlPoints()
-{
-	glPointSize(5.0);
-	glColor3f(1.0, 0.0, 1.0);
-	glBegin(GL_POINTS);
-	for (int i = 0; i <= L; i++)
-		glVertex3fv(&ctrlpoints[i][0]);
-	glEnd();
-}
-
-
-
 void curved_animation()
 {
 	const double t = glutGet(GLUT_ELAPSED_TIME) / 5000.0;
@@ -1509,114 +1087,43 @@ void curved_animation()
 
 	glPushMatrix();
 
-	if (animat)
-		glRotated(a, 0, 0, 1);
-
-	glRotatef(anglex, 1.0, 0.0, 0.0);
-	glRotatef(angley, 0.0, 1.0, 0.0);         	//rotate about y-axis
-	glRotatef(anglez, 0.0, 0.0, 1.0);
-
 	glRotatef(90, 0.0, 0.0, 1.0);
 	glTranslated(-3.5, 0, 0);
 	glGetDoublev(GL_MODELVIEW_MATRIX, modelview); //get the modelview info
 
-	//matColor(0,0,0,20);   // front face color
-	//matColor(0.0,0,0,20,1);  // back face color
 	material_property(0, 1, 0);
-
-
-	/*
-	// chair table -------------- if i call the chair table from here, the chair table will be up down left right
-	 glPushMatrix();
-	 glTranslatef(200,10,-10);
-	 glScalef(0.5,0.5,0.5);
-	 chair_table();
-	 glPopMatrix();
- */
-
-	if (shcpt)
-	{
-		//matColor(0.0,0.0,0.9,20);
-		material_property(0, 1, 0);
-
-		showControlPoints();
-	}
-
 	glPopMatrix();
-
-
-
 }
+
 static void key(unsigned char key, int x, int y)
 {
-    switch (key)
-    {
-    case 'u': // up
-        eyeY++;
-        lookY++;
-        break;
-    case 'd': // down
-        eyeY--;
-        lookY--;
-        break;
-    case 'a': // look right
-        lookX++;
-        break;
-    case 'b':
-        lookX--;
-        // look left
-        break;
-    case 'p': // rotate left
-        rot--;
-        break;
-    case 'q': // rotate right
-        rot++;
-        break;
-    case 'l': // left
-        eyeX--;
-        lookX--;
-        break;
-    case 'r': // right
-        eyeX++;
-        lookX++;
-        break;
-    case '+': // zoom in
-        eyeZ--;
-        break;
-
-	case '-':
-		//zoom out
-		eyeZ++;
+	switch (key)
+	{
+	case 'u': // up
+		eyeY++;
+		lookY++;
 		break;
-	case 's':
-	case 'S':
-		shcpt = !shcpt;
+	case 'd': // down
+		eyeY--;
+		lookY--;
+		break;
+	case 'a': // look right
+		lookX += 5;
+		break;
+	case 'b':// look left
+		lookX -= 5;
+
+		break;
+	case 'p': // rotate left
+		rot--;
+		break;
+	case 'q': // rotate right
+		rot++;
 		break;
 
 	case 'w':
 	case 'W':
 		wired = !wired;
-		break;
-
-	case 'x':
-		anglex = (anglex + 3) % 360;
-		break;
-	case 'X':
-		anglex = (anglex - 3) % 360;
-		break;
-
-	case 'y':
-		angley = (angley + 3) % 360;
-		break;
-	case 'Y':
-		angley = (angley - 3) % 360;
-		break;
-
-	case 'z':
-		anglez = (anglez + 3) % 360;
-		break;
-	case 'Z':
-		anglez = (anglez - 3) % 360;
 		break;
 
 	case '1':
@@ -1634,9 +1141,6 @@ static void key(unsigned char key, int x, int y)
 		main_light_switch = !main_light_switch;
 		break;
 	case '8':
-		car_switch = !car_switch;
-		break;
-	case '9':
 		bus_switch = !bus_switch;
 		break;
 	}
@@ -1650,33 +1154,26 @@ void display_settings()
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
-	int frustum_window = 8;
+	int frustum_window = 10;
 	glFrustum(-frustum_window, frustum_window, -frustum_window, frustum_window, 4, 300);
 
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
 
-
-
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
 
 	gluLookAt(eyeX, eyeY, eyeZ, lookX, lookY, lookZ, 0, 1, 0);
-	//glViewport(0, 0, window_width, window_height);
 
 	glRotatef(rot, 0, 1, 0);
-
 }
 
 static void display(void)
 {
-
-
 	display_settings();
 	base_floor();
 	sun_moon();
 	main_light();
-	//axes();
 	buiding();
 	road();
 	playground();
@@ -1725,15 +1222,8 @@ static void display(void)
 	signboard();
 	glPopMatrix();
 
-
-	//Car Move
-
-
 	// BUS
-	//bus();
-	//bus_car_control();
 	bus_control();
-	car_control();
 
 	glPushMatrix();
 	glTranslatef(-205, 45, -40);
@@ -1749,29 +1239,6 @@ static void display(void)
 	glTranslatef(-100, 0, -40);
 	spot_lighting();
 	glPopMatrix();
-	//spot_light_function(-205,40,-10);
-	//spot_light_function(-205,40,-20);
-	//spot_light_function(-205,40,-30);
-	//spot_light_function(-205,40,-40);
-	/*
-	for (int i=0;i<=50;i=i+10)
-	{
-		//glPushMatrix();
-		spot_light_function(-205,40,-i);
-		//glPopMatrix();
-	}
-	*/
-
-	/*
-	for (int i=-10;i<=50;i=i+10)
-	{
-
-	glPushMatrix();
-	glTranslatef(-100,0,-i);
-	spot_lighting();
-	glPopMatrix();
-	}
-	*/
 
 	park_with_tree();
 	// more park
@@ -1808,32 +1275,6 @@ static void display(void)
 	traffic_signal();
 	glPopMatrix();
 
-	/*
-	//light 1
-	glPushMatrix();
-	light_function_0(40,35,0);
-	glTranslatef(40,-20,0);
-	road_light();
-	//cube();
-	glPopMatrix();
-	// light 2
-	glPushMatrix();
-	light_function_1(-100,35,0);
-	glTranslatef(-100,0,0);
-	road_light();
-	//cube();
-	glPopMatrix();
-	*/
-
-	// Road light position 1
-	/*
-	glPushMatrix();
-	glTranslatef(125,20,0);
-	glScalef(2,2,2);
-	cube(1.0,0,0);
-	glPopMatrix();
-
-	*/
 	for (int i = 10; i <= 100; i = i + 20)
 	{
 		glPushMatrix();
@@ -1861,11 +1302,11 @@ static void display(void)
 	}
 
 
-    // Curved Setting for animation
-    curved_animation();
+	// Curved Setting for animation
+	curved_animation();
 
-    glFlush();
-    glutSwapBuffers();
+	glFlush();
+	glutSwapBuffers();
 }
 void texture_function()
 {
@@ -1915,6 +1356,8 @@ void texture_function()
 	LoadTexture("res\\images\\car1.bmp", 20);
 	// sun moon
 	LoadTexture("res\\images\\sun1.bmp", 21);
+	//to fix a bug
+	LoadTexture("res\\images\\sun1.bmp", 22);
 
 	// watch
 	LoadTexture("res\\images\\watch1.bmp", 23);
@@ -1938,23 +1381,23 @@ void texture_function()
 
 void SpecialInput(int key, int x, int y)
 {
-    switch (key)
-    {
-    case GLUT_KEY_UP:
-        eyeZ--;
-        break;
-    case GLUT_KEY_DOWN:
-        eyeZ++;
-        break;
-    case GLUT_KEY_LEFT:
-        eyeX--;
-        lookX--;
-        break;
-    case GLUT_KEY_RIGHT:
-        eyeX++;
-        lookX++;
-        break;
-    }
+	switch (key)
+	{
+	case GLUT_KEY_UP:
+		eyeZ--;
+		break;
+	case GLUT_KEY_DOWN:
+		eyeZ++;
+		break;
+	case GLUT_KEY_LEFT:
+		eyeX--;
+		lookX--;
+		break;
+	case GLUT_KEY_RIGHT:
+		eyeX++;
+		lookX++;
+		break;
+	}
 }
 
 
@@ -1970,14 +1413,12 @@ int main(int argc, char* argv[])
 	texture_function();
 
 
-	cout << "-------------------------------------------------------------------------------------------" << endl;
-	cout << "-------------------------------------------------------------------------------------------" << endl;
-	cout << "------------------------------------------- 3D City Design --------------------------------" << endl;
-	cout << "-------------------------------------------- ANA LAZARENCO --------------------------------" << endl;
-	cout << "-------------------------------------------------------------------------------------------" << endl;
-	cout << "-------------------------------------------------------------------------------------------" << endl;
-	cout << "-------------------------------------------- Tema de examen  ------------------------------" << endl;
-	cout << "-------------------------------------------------------------------------------------------" << endl;
+	cout << "----------------------------------------------------------------------------------" << endl;
+	cout << "---------------------------------- 3D City Design --------------------------------" << endl;
+	cout << "----------------------------------- ANA LAZARENCO --------------------------------" << endl;
+	cout << "----------------------------------------------------------------------------------" << endl;
+	cout << "----------------------------------- Tema de examen  ------------------------------" << endl;
+	cout << "----------------------------------------------------------------------------------" << endl;
 	cout << "1. Buildings \t\t 2. Roads \t\t 3. Traffic lights \t 4. Road lights \t " << endl;
 	cout << "5. Tress \t\t 6. Park \t\t 7. Cars \t\t 8. Playgrounds " << endl;
 	cout << "9. Swimming Pool \t 10. Shopping Malls  \t 11. Signboard \t\t 12. Sun/Moon " << endl;
@@ -1986,15 +1427,15 @@ int main(int argc, char* argv[])
 
 
 
-    cout << "--------------------------------------------Instruction------------------------------------" << endl;
-    cout << "\t Press : Arrow up -> Move Up" << endl;
-    cout << "\t Press : Arrow down -> Move Down" << endl;
-    cout << "\t Press : Arrow left -> Move Left" << endl;
-    cout << "\t Press : Arrow right -> Move Right" << endl;
-    cout << "\t Press : u -> Move Up" << endl;
-    cout << "\t Press : d -> Move Down" << endl;
-    cout << "\t Press : l -> Move Left" << endl;
-    cout << "\t Press : r -> Move Right" << endl;
+	cout << "--------------------------------------------Instruction------------------------------------" << endl;
+	cout << "\t Press : Arrow up -> Move Up" << endl;
+	cout << "\t Press : Arrow down -> Move Down" << endl;
+	cout << "\t Press : Arrow left -> Move Left" << endl;
+	cout << "\t Press : Arrow right -> Move Right" << endl;
+	cout << "\t Press : u -> Move Up" << endl;
+	cout << "\t Press : d -> Move Down" << endl;
+	cout << "\t Press : l -> Move Left" << endl;
+	cout << "\t Press : r -> Move Right" << endl;
 
 	cout << "\t Press : p -> Rotate Right" << endl;
 	cout << "\t Press : p -> Rotate Right" << endl;
@@ -2014,17 +1455,15 @@ int main(int argc, char* argv[])
 	cout << "\t Press : 3 -> ON/OFF Spot Light" << endl;
 	cout << "\t Press : 4 -> ON/OFF Sun/Moon Light" << endl;
 
-	cout << "\t Press : 8 -> START/STOP Car Moving" << endl;
-	cout << "\t Press : 9 -> START/STOP Bus Moving" << endl;
+	cout << "\t Press : 8 -> START/STOP Bus Moving" << endl;
 
 
 
 
-    glutDisplayFunc(display);
-    glutKeyboardFunc(key);
-    glutSpecialFunc(SpecialInput);
-    glutMouseFunc(processMouse);
-    glutIdleFunc(idle);
+	glutDisplayFunc(display);
+	glutKeyboardFunc(key);
+	glutSpecialFunc(SpecialInput);
+	glutIdleFunc(idle);
 
 
 

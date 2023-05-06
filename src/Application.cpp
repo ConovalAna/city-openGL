@@ -46,10 +46,10 @@ GLfloat lookX = 0;
 GLfloat lookY = 40;
 GLfloat lookZ = -200;
 
-bool light_switch_0 = false;
-bool light_switch_1 = false;
-bool spot_light_switch = false;
-bool main_light_switch = false;
+bool light_switch_0 = true;
+bool light_switch_1 = true;
+bool spot_light_switch = true;
+bool main_light_switch = true;
 
 float carx = -300, carz = 0;
 float busx = 0, busz = -300;
@@ -1724,73 +1724,6 @@ void park_with_tree()
 
 }
 
-void tableBezier()
-{
-    int i, j;
-    float x, y, z, r;				//current coordinates
-    float x1, y1, z1, r1;			//next coordinates
-    float theta;
-
-    const float startx = 0, endx = ctrlpoints[L][0];
-    //number of angular slices
-    const float dx = (endx - startx) / nt;	//x step size
-    const float dtheta = 2 * PI / ntheta;		//angular step size
-
-    float t = 0;
-    float dt = 1.0 / nt;
-    float xy[2];
-    BezierCurve(t, xy);
-    x = xy[0];
-    r = xy[1];
-    //rotate about z-axis
-    float p1x, p1y, p1z, p2x, p2y, p2z;
-    for (i = 0; i < nt; ++i)  			//step through x
-    {
-        theta = 0;
-        t += dt;
-        BezierCurve(t, xy);
-        x1 = xy[0];
-        r1 = xy[1];
-
-        //draw the surface composed of quadrilaterals by sweeping theta
-        glBegin(GL_QUAD_STRIP);
-        for (j = 0; j <= ntheta; ++j)
-        {
-            theta += dtheta;
-            double cosa = cos(theta);
-            double sina = sin(theta);
-            y = r * cosa;
-            y1 = r1 * cosa;	//current and next y
-            z = r * sina;
-            z1 = r1 * sina;	//current and next z
-
-            //edge from point at x to point at next x
-            glVertex3f(x, y, z);
-
-            if (j > 0)
-            {
-                getNormal3p(p1x, p1y, p1z, p2x, p2y, p2z, x, y, z);
-            }
-            else
-            {
-                p1x = x;
-                p1y = y;
-                p1z = z;
-                p2x = x1;
-                p2y = y1;
-                p2z = z1;
-
-            }
-            glVertex3f(x1, y1, z1);
-
-            //forms quad with next pair of points with incremented theta value
-        }
-        glEnd();
-        x = x1;
-        r = r1;
-    } //for i
-
-}
 
 static void idle(void)
 {
@@ -1807,137 +1740,9 @@ void showControlPoints()
         glVertex3fv(&ctrlpoints[i][0]);
     glEnd();
 }
-void chair()
-{
-
-    float length = 20;
-    float width = 1;
-
-    //base seat
-    glPushMatrix();
-    glTranslatef(0, length / 2, 0);
-    glScalef(length, width, length);
-    glTranslatef(-0.5, -0.5, -0.5);
-    cube();
-    glPopMatrix();
-
-    // leg base 1
-    glPushMatrix();
-    glTranslatef(length / 2 - width / 2, 0, length / 2 - width / 2);
-    glScalef(width, length, width);
-    glTranslatef(-0.5, -0.5, -0.5);
-    cube(1, 0, 0);
-    glPopMatrix();
-    // leg base 2
-    glPushMatrix();
-    glTranslatef(length / 2 - width / 2, 0, -length / 2 + width / 2);
-    glScalef(width, length, width);
-    glTranslatef(-0.5, -0.5, -0.5);
-    cube(1, 0, 0);
-    glPopMatrix();
-    // leg base 3
-    glPushMatrix();
-    glTranslatef(-length / 2 + width / 2, 0, +length / 2 - width / 2);
-    glScalef(width, length, width);
-    glTranslatef(-0.5, -0.5, -0.5);
-    cube(1, 0, 0);
-    glPopMatrix();
-    // leg  base 4
-    glPushMatrix();
-    glTranslatef(-length / 2 + width / 2, 0, -length / 2 + width / 2);
-    glScalef(width, length, width);
-    glTranslatef(-0.5, -0.5, -0.5);
-    cube(1, 0, 0);
-    glPopMatrix();
-
-    // upper  1
-    glPushMatrix();
-    glTranslatef(length / 2 - width / 2, length, length / 2 - width / 2);
-    glScalef(width, length, width);
-    glTranslatef(-0.5, -0.5, -0.5);
-    cube(0, 1, 0);
-    glPopMatrix();
-    // upper 2
-    glPushMatrix();
-    glTranslatef(-length / 2 - width / 2, length, length / 2 + width / 2);
-    glScalef(width, length, width);
-    glTranslatef(-0.5, -0.5, -0.5);
-    cube(0, 1, 0);
-    glPopMatrix();
-
-    // upper close 1
-    glPushMatrix();
-    glTranslatef(0, length, length / 2);
-    glScalef(length, length / 6, 0);
-    glTranslatef(-0.5, -0.5, -0.5);
-    cube(0, 0, 1);
-    glPopMatrix();
-    // upper close 2
-    glPushMatrix();
-    glTranslatef(0, length + 5, length / 2);
-    glScalef(length, length / 6, 0);
-    glTranslatef(-0.5, -0.5, -0.5);
-    cube(1, 0, 1);
-    glPopMatrix();
-
-    // upper close 3
-    glPushMatrix();
-    glTranslatef(0, length - 5, length / 2);
-    glScalef(length, length / 6, 0);
-    glTranslatef(-0.5, -0.5, -0.5);
-    cube(1, 0, 1);
-    glPopMatrix();
 
 
-}
 
-
-void chair_table()
-{
-    // CURVED CHAIR TABLE PART
-    glPushMatrix();
-    material_property(0.5, 0.4, 0.3);
-    glRotatef(90, 0.0, 0.0, 1.0);
-    //glRotatef( 180, 1.0, 0.0, 1.0);
-    glTranslated(-22, 0, 0);
-    glScalef(3, 3, 3);
-    tableBezier();
-    glPopMatrix();
-
-    // 1st chair
-    glPushMatrix();
-    glTranslatef(0, -5, -20);
-    glRotatef(180, 0, 1, 0);
-    glScalef(0.5, 0.5, 0.5);
-    chair();
-    glPopMatrix();
-
-    //2nd chair
-    glPushMatrix();
-
-    glTranslatef(0, -5, 20);
-    //glRotatef(180,0,1,0);
-    glScalef(0.5, 0.5, 0.5);
-    chair();
-    glPopMatrix();
-
-    //3rd chair
-    glPushMatrix();
-    glTranslatef(-22, -5, 0);
-    glRotatef(-90, 0, 1, 0);
-    glScalef(0.5, 0.5, 0.5);
-    chair();
-    glPopMatrix();
-    //4th chair
-    glPushMatrix();
-    glTranslatef(22, -5, 0);
-    glRotatef(90, 0, 1, 0);
-    glScalef(0.5, 0.5, 0.5);
-    chair();
-    glPopMatrix();
-
-
-}
 void curved_animation()
 {
     const double t = glutGet(GLUT_ELAPSED_TIME) / 5000.0;
@@ -1992,31 +1797,27 @@ void curved_animation()
     glPopMatrix();
 
 }
+
+
 static void key(unsigned char key, int x, int y)
 {
     switch (key)
     {
     case 'u': // up
-
-
         eyeY++;
         lookY++;
-
         break;
     case 'd': // down
-
         eyeY--;
         lookY--;
         break;
     case 'a': // look right
         lookX++;
-
         break;
     case 'b':
         lookX--;
         // look left
         break;
-
     case 'p': // rotate left
         rot--;
         break;
@@ -2024,17 +1825,12 @@ static void key(unsigned char key, int x, int y)
         rot++;
         break;
     case 'l': // left
-
         eyeX--;
         lookX--;
-
-
         break;
     case 'r': // right
-
         eyeX++;
         lookX++;
-
         break;
     case '+': // zoom in
         eyeZ--;
@@ -2318,17 +2114,8 @@ static void display(void)
     }
 
 
-    // chair table
-    glPushMatrix();
-    glTranslatef(200, 10, -10);
-    glScalef(0.5, 0.5, 0.5);
-    chair_table();
-    glPopMatrix();
-
     // Curved Setting for animation
     curved_animation();
-
-
 
     glFlush();
     glutSwapBuffers();
@@ -2401,6 +2188,29 @@ void texture_function()
     // hotel Door
     LoadTexture("res\\images\\door3.bmp", 30);
 }
+
+void SpecialInput(int key, int x, int y)
+{
+    switch (key)
+    {
+    case GLUT_KEY_UP:
+        eyeZ--;
+        break;
+    case GLUT_KEY_DOWN:
+        eyeZ++;
+        break;
+    case GLUT_KEY_LEFT:
+        eyeX--;
+        lookX--;
+        break;
+    case GLUT_KEY_RIGHT:
+        eyeX++;
+        lookX++;
+        break;
+    }
+}
+
+
 int main(int argc, char* argv[])
 {
 
@@ -2430,6 +2240,10 @@ int main(int argc, char* argv[])
 
 
     cout << "--------------------------------------------Instruction------------------------------------" << endl;
+    cout << "\t Press : Arrow up -> Move Up" << endl;
+    cout << "\t Press : Arrow down -> Move Down" << endl;
+    cout << "\t Press : Arrow left -> Move Left" << endl;
+    cout << "\t Press : Arrow right -> Move Right" << endl;
     cout << "\t Press : u -> Move Up" << endl;
     cout << "\t Press : d -> Move Down" << endl;
     cout << "\t Press : l -> Move Left" << endl;
@@ -2461,6 +2275,7 @@ int main(int argc, char* argv[])
 
     glutDisplayFunc(display);
     glutKeyboardFunc(key);
+    glutSpecialFunc(SpecialInput);
     glutMouseFunc(processMouse);
     glutIdleFunc(idle);
 

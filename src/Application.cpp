@@ -1563,67 +1563,7 @@ void base_floor()
     glDisable(GL_TEXTURE_2D);
 
 }
-void swimming_pool()
-{
-    glEnable(GL_TEXTURE_2D);
-    glBindTexture(GL_TEXTURE_2D, 22);
 
-    glPushMatrix();
-    glTranslatef(-250, 0, -20);
-    glScalef(80, 2, 50);
-    glTranslatef(-0.5, -0.5, -0.5);
-    cube();
-    glPopMatrix();
-
-    glDisable(GL_TEXTURE_2D);
-
-
-    // part 1
-    glEnable(GL_TEXTURE_2D);
-    glBindTexture(GL_TEXTURE_2D, 20);
-    glPushMatrix();
-    glTranslatef(-210, 3, -20);
-    glScalef(5, 20, 50);
-    glTranslatef(-0.5, -0.5, -0.5);
-    cube();
-    glPopMatrix();
-    glDisable(GL_TEXTURE_2D);
-
-    // part 2
-    glEnable(GL_TEXTURE_2D);
-    glBindTexture(GL_TEXTURE_2D, 20);
-    glPushMatrix();
-    glTranslatef(-290, 3, -20);
-    glScalef(5, 20, 50);
-    glTranslatef(-0.5, -0.5, -0.5);
-    cube();
-    glPopMatrix();
-    glDisable(GL_TEXTURE_2D);
-
-    // Part 3
-    glEnable(GL_TEXTURE_2D);
-    glBindTexture(GL_TEXTURE_2D, 20);
-    glPushMatrix();
-    glTranslatef(-250, 3, -45);
-    glScalef(80, 20, 5);
-    glTranslatef(-0.5, -0.5, -0.5);
-    cube();
-    glPopMatrix();
-    glDisable(GL_TEXTURE_2D);
-
-    // Part 4
-    glEnable(GL_TEXTURE_2D);
-    glBindTexture(GL_TEXTURE_2D, 20);
-    glPushMatrix();
-    glTranslatef(-250, 3, 5);
-    glScalef(80, 20, 5);
-    glTranslatef(-0.5, -0.5, -0.5);
-    cube();
-    glPopMatrix();
-    glDisable(GL_TEXTURE_2D);
-
-
-}
 void park()
 {
     // wood
@@ -2250,8 +2190,6 @@ static void display(void)
     //bus_car_control();
     bus_control();
     car_control();
-    // Swimming Pool
-    swimming_pool();
 
     glPushMatrix();
     glTranslatef(-205, 45, -40);
@@ -2443,8 +2381,7 @@ void texture_function()
     LoadTexture("res\\images\\car1.bmp", 20);
     // sun moon
     LoadTexture("res\\images\\sun1.bmp", 21);
-    //swimming pool water
-    LoadTexture("res\\images\\water3.bmp", 22);
+  
     // watch
     LoadTexture("res\\images\\watch1.bmp", 23);
     // Walls
@@ -2479,11 +2416,10 @@ int main(int argc, char* argv[])
     cout << "-------------------------------------------------------------------------------------------" << endl;
     cout << "-------------------------------------------------------------------------------------------" << endl;
     cout << "------------------------------------------- 3D City Design --------------------------------" << endl;
-    cout << "-------------------------------------------- Faisal Ahmed ---------------------------------" << endl;
-    cout << "-------------------------------------------- Roll: 1607048 --------------------------------" << endl;
+    cout << "-------------------------------------------- ANA LAZARENCO --------------------------------" << endl;
     cout << "-------------------------------------------------------------------------------------------" << endl;
     cout << "-------------------------------------------------------------------------------------------" << endl;
-    cout << "------------------------------ Components of 3D City Architecture Design ------------------" << endl;
+    cout << "-------------------------------------------- Tema de examen  ------------------------------" << endl;
     cout << "-------------------------------------------------------------------------------------------" << endl;
     cout << "1. Buildings \t\t 2. Roads \t\t 3. Traffic lights \t 4. Road lights \t " << endl;
     cout << "5. Tress \t\t 6. Park \t\t 7. Cars \t\t 8. Playgrounds " << endl;

@@ -27,6 +27,7 @@ Components of 3D City Architecture
 #include "BmpLoader.h"
 #include <fstream>
 #include <iostream>
+#include "stb_image.h"
 #define GL_CLAMP_TO_EDGE 0x812F
 using namespace std;
 
@@ -149,7 +150,7 @@ void cube(float R = 0.5, float G = 0.5, float B = 0.5)
 
 
 
-void LoadTexture(const char* filename, int rep = 1, unsigned int *id = &ID)
+void LoadTexture(const char* filename, int rep = 1, unsigned int* id = &ID)
 {
 	glGenTextures(1, id);
 	glBindTexture(GL_TEXTURE_2D, *id);
@@ -596,6 +597,31 @@ void spot_lighting()
 	glPopMatrix();
 
 }
+
+GLuint textureID = 1;
+
+
+void renderScene() {
+
+	glBindTexture(GL_TEXTURE_2D, textureID);
+
+	// Render a textured quad with bump mapping
+	glBegin(GL_TRIANGLES);
+	glTranslatef(0, 250, 0);
+	glNormal3f(0.0, 0.0, 1.0);
+	glTexCoord2f(0.0, 0.0);
+	glVertex3f(-0.5, -0.5, 0.0);
+
+	glTexCoord2f(1.0, 0.0);
+	glVertex3f(0.5, -0.5, 0.0);
+
+	glTexCoord2f(0.5, 1.0);
+	glVertex3f(0.0, 0.5, 0.0);
+	glEnd();
+
+	glDisable(GL_TEXTURE_2D);
+}
+
 void sun_moon()
 {
 
@@ -609,7 +635,32 @@ void sun_moon()
 	glutSolidSphere(2, 16, 16);
 	glPopMatrix();
 	glDisable(GL_TEXTURE_2D);
+
+	//renderScene();
 }
+
+
+void load_sun_texture() {
+	glEnable(GL_TEXTURE_2D);
+	glGenTextures(1, &textureID);
+	glBindTexture(GL_TEXTURE_2D, textureID);
+
+	int width, height, numChannels;
+	unsigned char* imageData = stbi_load("res//images//leaf6.bmp", &width, &height, &numChannels, 0);
+
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, imageData);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+
+	if (imageData != nullptr)
+	{
+		stbi_image_free(imageData);
+	}
+	glBindTexture(GL_TEXTURE_2D, 0);
+}
+
+
+
 void main_light()
 {
 	GLfloat no_light[] = { 0.0, 0.0, 0.0, 1.0 };
@@ -946,7 +997,7 @@ void base_floor()
 	glEnable(GL_TEXTURE_2D);
 	glBindTexture(GL_TEXTURE_2D, horizontID);
 	glPushMatrix();
-	glTranslatef(length / 2 +200, 0, 0);
+	glTranslatef(length / 2 + 200, 0, 0);
 	glScalef(thick, length, length);
 	glTranslatef(0, 0, -0.5);
 	cube(0.5, 0.5, 0.5);
@@ -957,7 +1008,7 @@ void base_floor()
 	glEnable(GL_TEXTURE_2D);
 	glBindTexture(GL_TEXTURE_2D, horizontID);
 	glPushMatrix();
-	glTranslatef(-length / 2 -200, 0, 0);
+	glTranslatef(-length / 2 - 200, 0, 0);
 	glScalef(thick, length, length);
 	glTranslatef(0, 0, -0.5);
 	cube(0.5, 0.5, 0.5);
@@ -1187,12 +1238,16 @@ static void key(unsigned char key, int x, int y)
 	switch (key)
 	{
 	case 'u': // up
-		eyeY++;
-		lookY++;
+		if (eyeY <= 200) {
+			eyeY++;
+			lookY++;
+		}
 		break;
 	case 'd': // down
-		eyeY--;
-		lookY--;
+		if (eyeY >=0) {
+			eyeY--;
+			lookY--;
+		}
 		break;
 	case 'a': // look right
 		lookX += 5;
@@ -1466,11 +1521,12 @@ void texture_function()
 	// hotel Door
 	LoadTexture("res\\images\\door3.bmp", 30);
 
-	LoadTexture("res\\images\\sky.bmp",31, &skyID);
+	LoadTexture("res\\images\\sky.bmp", 31, &skyID);
 
 	LoadTexture("res\\images\\horizont.bmp", 32, &horizontID);
 
-
+	//LoadTexture("res\\images\\floor3.bmp", 33, &textureID);
+	load_sun_texture();
 }
 
 void SpecialInput(int key, int x, int y)
@@ -1514,9 +1570,9 @@ int main(int argc, char* argv[])
 	cout << "----------------------------------- Tema de examen  ------------------------------" << endl;
 	cout << "----------------------------------------------------------------------------------" << endl;
 	cout << "1. Buildings \t\t 2. Roads \t\t 3. Traffic lights \t 4. Road lights \t " << endl;
-	cout << "5. Tress \t\t 6. Park \t\t 7. Cars \t\t 8. Playgrounds " << endl;
-	cout << "9. Swimming Pool \t 10. Shopping Malls  \t 11. Signboard \t\t 12. Sun/Moon " << endl;
-	cout << "13. Bus \t\t 14. Hotel \t\t 15. Traffic system \t 16. Clock " << endl;
+	cout << "5. Tress \t\t 6. Park \t\t 7. Bus \t\t 8. Playgrounds " << endl;
+	cout << "9. Clock \t 10. Shopping Malls  \t 11. Signboard \t\t 12. Sun " << endl;
+	cout << "13. Hotel \t\t " << endl;
 	cout << "-------------------------------------------------------------------------------------------" << endl;
 
 

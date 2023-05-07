@@ -21,16 +21,7 @@
     <ClCompile Include="src\stb_image.h">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\Texture.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="src\stb_image.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\HelperFunctions.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Objects.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\BmpLoader.cpp">
@@ -38,15 +29,6 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="src\Texture.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\HelperFunctions.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Objects.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="src\BmpLoader.h">
       <Filter>Header Files</Filter>
     </ClInclude>
